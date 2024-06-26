@@ -32,7 +32,7 @@ namespace Graduation_Project.Api.Controllers
             _httpcontext = httpcontext;
            
         }
-        [Authorize(Roles ="Doctor")]
+        
         
         [HttpGet("GetDoctorPatinets")]
         public async Task<IActionResult> GetDoctorPatinets()
@@ -47,7 +47,7 @@ namespace Graduation_Project.Api.Controllers
         public async Task<IActionResult> GetDoctors()
         {
             var res = await _baserepository.GetAllAsync();
-            return Ok(res.Select(o=>new { o.Id,o.UserName }));
+            return Ok(res.Select(o=>new { o.Id,o.FName,o.LName,o.UserName,o.Email, o.PhoneNumber,o.Password,o.UserId }));
         }
 
         

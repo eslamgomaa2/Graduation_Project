@@ -32,7 +32,6 @@ namespace Repository.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("AlarmMessage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PatientId")
@@ -55,6 +54,29 @@ namespace Repository.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -83,20 +105,24 @@ namespace Repository.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("HeartRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("FName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<decimal>("OxygenRate")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("LName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -105,6 +131,33 @@ namespace Repository.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Patients", "Identity");
+                });
+
+            modelBuilder.Entity("Domins.Model.SensorData", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<int>("HeartRate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OxygenRate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("SensorData", "Identity");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -339,17 +392,20 @@ namespace Repository.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "eaa9b979-0d2c-4e39-bb60-f98a772b5f74",
-                            Email = "admin@example.com",
+                            ConcurrencyStamp = "eef8bffe-efc4-4c41-b8df-7d05d28d8e6b",
+                            Email = "Admin@example.com",
                             EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "Admin",
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EXAMPLE.COM",
                             NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "1254515156",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA4OeAkk9QgGuoEGBgbtvDkGNsn8DFXkVbYiVhb4zVs5SjQD+wZGlzyH/tVseWpmfg==",
+                            PhoneNumber = "012152001",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "8e9d114e-0645-472d-9843-57eea135dab8",
                             TwoFactorEnabled = false,
-                            UserName = "admin@example.com"
+                            UserName = "Admin@example.com"
                         });
                 });
 
@@ -378,7 +434,7 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domins.Model.Patient", b =>
                 {
                     b.HasOne("Domins.Model.Doctor", "Doctor")
-                        .WithMany("Patient")
+                        .WithMany("Patients")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -392,6 +448,17 @@ namespace Repository.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domins.Model.SensorData", b =>
+                {
+                    b.HasOne("Domins.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -484,7 +551,7 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domins.Model.Doctor", b =>
                 {
-                    b.Navigation("Patient");
+                    b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("Domins.Model.Patient", b =>

@@ -48,6 +48,15 @@ namespace Repository.Implementation
                 return response;
             }
 
+            
+            /*if (request.Role != await _userManager.GetRolesAsync(user))
+            {
+                response.IsAuthorized = false;
+                response.Message = $"UnAuthorized Role";
+                return response;
+            }*/
+
+
             JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
 
             response.Id = user.Id;
@@ -57,6 +66,7 @@ namespace Repository.Implementation
             var rolesList = await _userManager.GetRolesAsync(user);
             response.Roles = rolesList.ToList();
             response.IsAuthenticated = true;
+            
             /*if (useremail.RefreshTokens.Any(p => p.IsActive))
             {
                 var ActivRefreshToken = useremail.RefreshTokens.SingleOrDefault(p => p.IsActive);
@@ -85,10 +95,10 @@ namespace Repository.Implementation
 
             var user = await _userManager.FindByEmailAsync(model.Email);
             var username = await _userManager.FindByNameAsync(model.UserName);
-           
-            if (username !=null || user !=null )
+
+            if (username != null || user != null)
             {
-               
+
                 response.Message = $"Username '{model.UserName}'or  Email  {model.Email} is already Exist.";
 
                 return response;
@@ -96,6 +106,8 @@ namespace Repository.Implementation
             var newuser = new ApplicationUser
             {
 
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 Email = model.Email,
                 UserName = model.UserName,
                 PhoneNumber = model.phoneNumber
@@ -114,7 +126,9 @@ namespace Repository.Implementation
             await _userManager.AddToRoleAsync(newuser, Roles.Patient.ToString());
             var Patient = new Patient
             {
-                Name = model.UserName,
+                FName = model.FirstName,
+                LName = model.LastName,
+                UserName = model.UserName,
                 DoctorId = model.DoctorId,
                 UserId = newuser.Id
             };
@@ -123,10 +137,11 @@ namespace Repository.Implementation
             _dbcontext.SaveChanges();
 
             var jwtSecurityToken = await GenerateJWToken(newuser);
-            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             response.Email = newuser.Email;
             response.UserName = newuser.UserName;
             response.IsAuthenticated = true;
+            response.Id = newuser.Id;
+            response.Roles = new List<string>{Roles.Patient.ToString()};
 
 
 
@@ -168,6 +183,12 @@ namespace Repository.Implementation
             {
                 UserName = request.UserName,
                 UserId = newuser.Id,
+                FName = request.FirstName,
+                LName = request.LastName,
+                PhoneNumber=request.phoneNumber,
+                Email = request.Email,
+                Password = request.Password,
+              
             };
             await _dbcontext.Doctors.AddAsync(doctor);
 
@@ -178,7 +199,8 @@ namespace Repository.Implementation
             response.Email = newuser.Email;
             response.UserName = newuser.UserName;
             response.IsAuthenticated = true;
-
+            response.Id = newuser.Id;
+            response.Roles = new List<string>{Roles.Doctor.ToString() };
 
             return response;
 

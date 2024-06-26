@@ -10,6 +10,7 @@ namespace OA.Domain.Auth
         public string Email { get; set; }
         public  List<string> Roles { get; set; }
         public bool IsAuthenticated { get; set; }
+       
         public string JWToken { get; set; }
         [JsonIgnore]
         public string RefreshToken { get; set; }

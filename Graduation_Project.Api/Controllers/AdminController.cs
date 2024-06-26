@@ -41,20 +41,20 @@ namespace Graduation_Project.Api.Controllers
 
             return Ok(await _accountServices.AddDoctor(model));
         }
-        [HttpPut("UpDateDoctor/{id}")]
+        [HttpPut("EditDoctor/{id}")]
         public async Task<IActionResult> UpdateDoctor([FromBody] RegisterAsDoctorRequest model, string id)
         {
             if (!ModelState.IsValid) BadRequest(ModelState);
 
-            return Ok(await _adminservice.updatedoctor(model, id));
+            return Ok(await _adminservice.UpdateDoctor(model, id));
         }
-        [HttpDelete("DeleteDoctor{id}")]
+        [HttpDelete("DeleteDoctor/{id}")]
         public async Task<IActionResult> DeleteDoctor( string id)
         {
             if (!ModelState.IsValid) BadRequest(ModelState);
 
-            await _adminservice.Deletedoctor(id);
-            return Ok();
+           var res= await _adminservice.Deletedoctor(id);
+            return Ok(res);
         }
 
 

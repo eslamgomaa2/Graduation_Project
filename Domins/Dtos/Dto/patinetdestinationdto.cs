@@ -7,8 +7,5 @@ namespace Domins.Dtos.Dto
         [MaxLength(100)]
         public string Name { get; set; }
 
-
-        public decimal HeartRate { get; set; }
-        public decimal OxygenRate { get; set; }
     }
 }

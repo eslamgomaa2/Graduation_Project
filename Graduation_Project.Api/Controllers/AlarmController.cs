@@ -33,13 +33,13 @@ namespace Graduation_Project.Api.Controllers
  
             return Ok( await _alarmsService.Create(model));
         }
-        [HttpPut("update")]
+        [HttpPut("Edit/{id}")]
         public async Task<IActionResult> Update([FromBody] Alarmdto model, int id)
         {
            
             return Ok(await _alarmsService.Update(model,id));
         }
-        [HttpDelete("Delete")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
            

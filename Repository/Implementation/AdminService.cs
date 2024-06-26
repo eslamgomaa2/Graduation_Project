@@ -1,5 +1,4 @@
-﻿using Domins.Dtos.Dto;
-using Domins.Model;
+﻿using Domins.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OA.Domain.Auth;
@@ -18,16 +17,15 @@ namespace Repository.Implementation
             _userManager = userManager;
             _dbcontext = dbcontext;
         }
+
         public async Task<bool> Deletedoctor(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            
-            if (user == null )
-                return false;
-           
-            
-            var result = await _userManager.DeleteAsync(user);
 
+            if (user == null)
+                return false;
+
+            var result = await _userManager.DeleteAsync(user);
 
             return result.Succeeded;
 
@@ -35,24 +33,51 @@ namespace Repository.Implementation
 
 
 
-        public async Task<RegisterAsDoctorRequest> updatedoctor(RegisterAsDoctorRequest model, string id)
+        public async Task<RegisterAsDoctorRequest> UpdateDoctor(RegisterAsDoctorRequest model, string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            var sameuser = await _dbcontext.Doctors.SingleOrDefaultAsync(o => o.UserId == id);
+            var doctor = await _dbcontext.Doctors.SingleOrDefaultAsync(d => d.UserId == id);
 
-            user.Email = model.Email;
+            if (user == null || doctor == null)
+            {
+                throw new ArgumentException("User or doctor not found");
+            }
+
+            await UpdateUserAsync(user, model);
+            UpdateDoctor(doctor, model);
+
+            await _dbcontext.SaveChangesAsync();
+
+            return model;
+        }
+
+        private async Task UpdateUserAsync(ApplicationUser user, RegisterAsDoctorRequest model)
+        {
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.UserName = model.UserName;
+            user.Email = model.Email;
             user.PhoneNumber = model.phoneNumber;
-            await _userManager.UpdateAsync(user);
-            sameuser.UserName = model.UserName;
-            _dbcontext.Doctors.Update(sameuser);
-            _dbcontext.SaveChanges();
-            return model;
 
+            if (!string.IsNullOrEmpty(model.Password))
+            {
+                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
+            }
+
+            await _userManager.UpdateAsync(user);
         }
-      
+
+        private void UpdateDoctor(Doctor doctor, RegisterAsDoctorRequest model)
+        {
+            doctor.FName = model.FirstName;
+            doctor.LName = model.LastName;
+            doctor.UserName = model.UserName;
+            doctor.Email = model.Email;
+            doctor.PhoneNumber = model.phoneNumber;
+            doctor.Password = model.Password;
+
+            _dbcontext.Doctors.Update(doctor);
+        }
 
 
     }

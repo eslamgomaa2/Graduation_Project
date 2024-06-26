@@ -6,7 +6,7 @@ namespace Repository.Interfaces
 {
     public interface IAdminService :IBaseRepository<Doctor> 
     {
-        public Task<RegisterAsDoctorRequest> updatedoctor(RegisterAsDoctorRequest model,string id);
+        public Task<RegisterAsDoctorRequest> UpdateDoctor(RegisterAsDoctorRequest model,string id);
         public Task<bool> Deletedoctor(string id);
 
     }

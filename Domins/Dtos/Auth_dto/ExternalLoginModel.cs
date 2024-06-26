@@ -10,7 +10,7 @@ namespace Domins.Dtos.Auth_dto
     {
         public string Provider { get; set; }
         public string Providerkey{ get; set; }
-        public string ReturnUrl { get; set; }
+        
     }
 
 }

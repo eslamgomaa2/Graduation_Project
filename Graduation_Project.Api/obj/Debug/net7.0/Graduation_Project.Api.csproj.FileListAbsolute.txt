@@ -95,3 +95,10 @@ C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.
 C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.Facebook.dll
 C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\Firebase.dll
+C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\LiteDB.dll
+C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\System.Reactive.dll
+C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\System.Runtime.InteropServices.WindowsRuntime.dll
+C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\libman.json
+C:\Users\Softlaptop\Desktop\.net_projects\graduation_project\Graduation_Project.Api\bin\Debug\net7.0\Graduation_Project.Api.staticwebassets.runtime.json

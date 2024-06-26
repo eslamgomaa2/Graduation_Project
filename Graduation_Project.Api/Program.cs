@@ -40,6 +40,14 @@ builder.Services.AddTransient<IDoctorService, DoctorService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddSingleton<FirebaseSensorService>(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    string firebaseUrl = configuration["FirebaseConfig:FirebaseUrl"];
+    string authSecret = configuration["FirebaseConfig:AuthSecret"];
+    return new FirebaseSensorService(firebaseUrl, authSecret);
+});
+
 builder.Services.AddAuthentication(o =>
 {
     o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

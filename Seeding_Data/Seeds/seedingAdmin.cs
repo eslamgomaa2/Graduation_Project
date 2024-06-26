@@ -5,44 +5,26 @@ using OA.Domain.Auth;
 
 namespace Seeding_Data.Seeds
 {
-    public  class seedingAdmin
+    public static class SeedingAdmin
     {
-      
-
-       
-
-        public  async  void DefaultAdmin(UserManager<ApplicationUser> _userManager, RoleManager<IdentityRole> _RoleManager)
+        public static ApplicationUser GetDefaultAdminUser()
         {
-            
-           if (!await _RoleManager.RoleExistsAsync("Admin"))
+            return new ApplicationUser
             {
-               var Role= await _RoleManager.CreateAsync(new IdentityRole("Admin"));
-            }
-            if (await _userManager.FindByEmailAsync("Admin@gmail.com")==null)
-            {
-                var user=new ApplicationUser
-                {
-                    FirstName = "Admin",
-                    LastName = "Admin",
-                    UserName = "Admin",
-                    Email = "Admin@gmail.com",
-                    PhoneNumber = 012152001.ToString(),
-                   
-                };
-              var result =await  _userManager.CreateAsync(user, 0134456.ToString());
-                if(result.Succeeded)
-                {
-                   await _userManager.AddToRoleAsync(user,"Admin");
-                }
-            }
-
-
+                Id = "1", 
+                FirstName = "Admin",
+                LastName = "Admin",
+                UserName = "Admin@example.com",
+                NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                Email = "Admin@example.com",
+                NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null,"102030"),
+                EmailConfirmed = true,
+                PhoneNumber = "012152001",
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString()
+            };
         }
-       
-
-
-
-
-}
+    }
 }
 */

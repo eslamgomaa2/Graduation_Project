@@ -9,13 +9,14 @@ namespace OA.Domain.Auth
 
         [Required]
         public string LastName { get; set; }
+        [Required]
+        [MinLength(6)]
+        public string UserName { get; set; }
 
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
-        [MinLength(6)]
-        public string UserName { get; set; }
+       
         public string phoneNumber { get; set; }
 
         [Required]

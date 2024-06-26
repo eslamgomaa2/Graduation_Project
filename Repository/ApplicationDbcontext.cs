@@ -18,6 +18,7 @@ namespace Repository
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Alarm>Alarms { get; set; }
+        public DbSet<SensorData> SensorData { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -48,16 +49,19 @@ namespace Repository
                 entity.HasData(
             new ApplicationUser
             {
+
                 Id = "1", 
-                UserName = "admin@example.com",
+                FirstName = "Admin",
+                LastName = "Admin",
+                UserName = "Admin@example.com",
                 NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                Email = "admin@example.com",
+                Email = "Admin@example.com",
                 NormalizedEmail = "ADMIN@EXAMPLE.COM",
                 EmailConfirmed = true,
-                PasswordHash = 1254515156.ToString(),
-                SecurityStamp = string.Empty
-
-
+                PhoneNumber = "012152001",
+                PhoneNumberConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null,"Admin123!") 
 
             });
 

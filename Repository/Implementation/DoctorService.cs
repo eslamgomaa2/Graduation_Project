@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using Domins.Dtos.Dto;
-using Domins.Model;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
-
-using System.Security.Claims;
 
 namespace Repository.Implementation
 {

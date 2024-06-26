@@ -6,7 +6,13 @@ namespace Domins.Dtos.Auth_dto
     public class RegisterAsPatientRequest
     {
         [Required]
-        [MinLength(6)]
+        [MaxLength(8)]
+        public string FirstName { get; set; }
+        [Required]
+        [MaxLength(8)]
+        public string LastName { get; set; }
+        [Required]
+        [MinLength(8)]
         public string UserName { get; set; }
 
         [Required]

@@ -13,7 +13,12 @@ namespace Domins.Model
     {
         [Key]
         public int Id { get; set; }
-
+        [Required]
+        [MaxLength(100)]
+        public string FName { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string LName { get; set; }
         [Required]
         [MaxLength(100)]
         public string UserName { get; set; }
